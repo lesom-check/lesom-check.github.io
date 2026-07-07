@@ -1,16 +1,84 @@
 {
   "fi-server": {
-    "timestamp": "2026-07-07T02:58:53.546Z",
+    "timestamp": "2026-07-07T03:02:11.936Z",
     "host": "91.211.114.182:443",
     "label": "Сервер в Финляндии",
-    "data": null,
-    "error": "HTTP 403"
+    "data": {
+      "ch1.node.check-host.net": [
+        {
+          "address": "91.211.114.182",
+          "time": 0.040756
+        }
+      ],
+      "de1.node.check-host.net": [
+        {
+          "address": "91.211.114.182",
+          "time": 0.048707
+        }
+      ],
+      "fi1.node.check-host.net": [
+        {
+          "address": "91.211.114.182",
+          "time": 0.002365
+        }
+      ],
+      "nl1.node.check-host.net": [
+        {
+          "address": "91.211.114.182",
+          "time": 0.026886
+        }
+      ],
+      "ru1.node.check-host.net": [
+        {
+          "address": "91.211.114.182",
+          "time": 0.018453
+        }
+      ],
+      "us1.node.check-host.net": [
+        {
+          "address": "91.211.114.182",
+          "time": 0.165357
+        }
+      ]
+    },
+    "error": null
   },
   "ru-server": {
-    "timestamp": "2026-07-07T02:59:01.689Z",
+    "timestamp": "2026-07-07T03:02:32.402Z",
     "host": "185.228.235.125:443",
     "label": "Сервер в России",
-    "data": null,
-    "error": "HTTP 403"
+    "data": {
+      "ch1.node.check-host.net": [
+        {
+          "error": "Connection timed out"
+        }
+      ],
+      "de1.node.check-host.net": [
+        {
+          "error": "Connection timed out"
+        }
+      ],
+      "fi1.node.check-host.net": [
+        {
+          "error": "Connection timed out"
+        }
+      ],
+      "nl1.node.check-host.net": [
+        {
+          "error": "Connection timed out"
+        }
+      ],
+      "ru1.node.check-host.net": [
+        {
+          "error": "Connection timed out"
+        }
+      ],
+      "us1.node.check-host.net": [
+        {
+          "error": "Connection timed out"
+        }
+      ]
+    },
+    "error": null
   }
 }
