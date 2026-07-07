@@ -188,22 +188,31 @@ const Render = (() => {
         <div class="tbox-sub">185.228.235.125</div>
         <div class="tbox-stat">${nodeDot(ru.cls)} ${ru.totalOk}/${ru.totalAll}</div>
       </div>
+      <div class="tarrow ${ru.cls === 'available' ? 'tarrow-ok' : 'tarrow-warn'}">
+        <span class="tarr-line"></span>
+        <span class="tarr-head"></span>
+      </div>
+      <div class="tbox tbox-device ${ru.cls}">
+        <div class="tbox-icon">💻</div>
+        <div class="tbox-label">Устройство</div>
+        <div class="tbox-sub">клиент</div>
+      </div>
     `;
 
     const tvEl = document.getElementById('topology-verdict');
     if (tvEl) {
       if (fi.cls === 'available' && ru.cls === 'available') {
         tvEl.className = 'topology-verdict tv-ok';
-        tvEl.textContent = 'Каскад работает: оба сервера доступны';
+        tvEl.textContent = 'Каскад работает: Интернет → FI → RU → клиент';
       } else if (fi.cls === 'available' && ru.cls === 'unavailable') {
         tvEl.className = 'topology-verdict tv-warn';
-        tvEl.textContent = 'Finland VPS доступен, Russia VPS недоступен — вероятно, упал';
+        tvEl.textContent = 'Finland VPS доступен, Russia VPS недоступен — каскад разорван на RU';
       } else if (fi.cls === 'unavailable' && ru.cls === 'unavailable') {
         tvEl.className = 'topology-verdict tv-down';
-        tvEl.textContent = 'Оба сервера недоступны — проверьте питание/сеть';
+        tvEl.textContent = 'Оба сервера недоступны — каскад полностью разорван';
       } else if (fi.cls === 'unavailable' && ru.cls === 'available') {
         tvEl.className = 'topology-verdict tv-warn';
-        tvEl.textContent = 'Finland VPS недоступен, Russia VPS доступен';
+        tvEl.textContent = 'Finland VPS недоступен — каскад разорван на FI, RU доступен';
       } else {
         tvEl.className = 'topology-verdict';
         tvEl.textContent = 'Ожидание результатов проверки...';

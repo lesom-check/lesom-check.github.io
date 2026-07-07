@@ -257,6 +257,29 @@ header h1 {
   border-color: rgba(245, 158, 11, 0.4);
 }
 
+.tbox-device {
+  border-style: dashed;
+  min-width: 100px;
+}
+
+.tbox-device.available {
+  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.08);
+}
+
+.tbox-device.available .tbox-label {
+  color: var(--green);
+}
+
+.tbox-device.unavailable {
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.08);
+}
+
+.tbox-device.unavailable .tbox-label {
+  color: var(--red);
+}
+
 .tdot {
   display: inline-block;
   width: 8px;
