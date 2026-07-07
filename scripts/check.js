@@ -1,6 +1,6 @@
 const SERVERS = [
-  { id: 'fi-server', label: 'Сервер в Финляндии', ip: '91.211.114.182', port: 80 },
-  { id: 'ru-server', label: 'Сервер в России',    ip: '185.228.235.125', port: 80 },
+  { id: 'fi-server', label: 'Сервер в Финляндии', ip: '91.211.114.182', port: 443 },
+  { id: 'ru-server', label: 'Сервер в России',    ip: '185.228.235.125', port: 443 },
 ];
 
 const NODES = [

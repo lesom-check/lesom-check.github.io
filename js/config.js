@@ -5,13 +5,13 @@ const CONFIG = {
       id: 'fi-server',
       label: 'Сервер в Финляндии',
       ip: '91.211.114.182',
-      port: 80,
+      port: 443,
     },
     {
       id: 'ru-server',
       label: 'Сервер в России',
       ip: '185.228.235.125',
-      port: 80,
+      port: 443,
     },
   ],
   checkNodes: [
