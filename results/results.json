@@ -1,50 +1,50 @@
 {
   "fi-server": {
-    "timestamp": "2026-07-07T04:18:44.595Z",
+    "timestamp": "2026-07-07T04:31:10.289Z",
     "host": "91.211.114.182:443",
     "label": "Сервер в Финляндии",
     "data": {
       "ch1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.048516
+          "time": 0.059752
         }
       ],
       "de1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.0486259999999999
+          "time": 0.036403
         }
       ],
       "fi1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.003141
+          "time": 0.002281
         }
       ],
       "nl1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.027901
+          "time": 0.027323
         }
       ],
       "ru1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.019291
+          "time": 0.016839
         }
       ],
       "us1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.159643
+          "time": 0.148478
         }
       ]
     },
     "error": null
   },
   "ru-server": {
-    "timestamp": "2026-07-07T04:19:04.950Z",
+    "timestamp": "2026-07-07T04:31:30.666Z",
     "host": "185.228.235.125:443",
     "label": "Сервер в России",
     "data": {
@@ -65,7 +65,7 @@
       ],
       "nl1.node.check-host.net": [
         {
-          "error": "Network is unreachable"
+          "error": "Connection timed out"
         }
       ],
       "ru1.node.check-host.net": [
