@@ -1,57 +1,56 @@
 {
   "fi-server": {
-    "timestamp": "2026-07-07T02:38:22.757Z",
-    "host": "91.211.114.182:80",
+    "timestamp": "2026-07-07T02:39:53.313Z",
+    "host": "91.211.114.182:443",
     "label": "Сервер в Финляндии",
     "data": {
       "ch1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.040856
+          "time": 0.041892
         }
       ],
       "de1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.039541
+          "time": 0.04447
         }
       ],
       "fi1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.002804
+          "time": 0.002735
         }
       ],
       "nl1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.027662
+          "time": 0.028714
         }
       ],
       "ru1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.017315
+          "time": 0.019075
         }
       ],
       "us1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.159528
+          "time": 0.160861
         }
       ]
     },
     "error": null
   },
   "ru-server": {
-    "timestamp": "2026-07-07T02:38:41.427Z",
-    "host": "185.228.235.125:80",
+    "timestamp": "2026-07-07T02:40:05.743Z",
+    "host": "185.228.235.125:443",
     "label": "Сервер в России",
     "data": {
       "ch1.node.check-host.net": [
-        null,
         {
-          "message": "Connect timeout"
+          "error": "Connection timed out"
         }
       ],
       "de1.node.check-host.net": [
@@ -60,15 +59,13 @@
         }
       ],
       "fi1.node.check-host.net": [
-        null,
         {
-          "message": "Connect timeout"
+          "error": "Connection timed out"
         }
       ],
       "nl1.node.check-host.net": [
-        null,
         {
-          "message": "Connect timeout"
+          "error": "Connection timed out"
         }
       ],
       "ru1.node.check-host.net": [
