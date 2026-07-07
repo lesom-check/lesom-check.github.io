@@ -52,7 +52,12 @@ async function checkServer(server) {
 (async () => {
   const results = {};
 
-  for (const server of SERVERS) {
+  for (let i = 0; i < SERVERS.length; i++) {
+    const server = SERVERS[i];
+    if (i > 0) {
+      console.log('Waiting 8s before next server to avoid rate limit...');
+      await new Promise(r => setTimeout(r, 8000));
+    }
     try {
       const data = await checkServer(server);
       results[server.id] = {
