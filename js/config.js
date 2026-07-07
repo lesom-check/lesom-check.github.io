@@ -1,5 +1,4 @@
 const CONFIG = {
-  repo: 'lesom-check/cheker',
   servers: [
     {
       id: 'fi-server',
@@ -22,6 +21,5 @@ const CONFIG = {
     { id: 'us1.node.check-host.net', label: 'США', code: 'US' },
     { id: 'ch1.node.check-host.net', label: 'Швейцария', code: 'CH' },
   ],
-  pollResultsInterval: 4000,
-  maxResultPolls: 20,
+  refreshInterval: 30000,
 };

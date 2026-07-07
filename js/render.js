@@ -129,24 +129,6 @@ const Render = (() => {
     }
   }
 
-  function renderTokenInput(hasToken) {
-    const el = document.getElementById('token-section');
-    if (hasToken) {
-      el.innerHTML = `
-        <div class="token-row">
-          <span class="token-saved">Токен сохранён</span>
-          <button class="btn-token-reset" id="btn-token-reset">Изменить</button>
-        </div>`;
-    } else {
-      el.innerHTML = `
-        <div class="token-row">
-          <input type="password" id="token-input" class="token-input" placeholder="GitHub токен (actions: write)">
-          <button class="btn-token-save" id="btn-token-save">Сохранить</button>
-        </div>
-        <div class="token-hint">Fine-grained токен → только права <code>actions: write</code> на репозиторий</div>`;
-    }
-  }
-
   function showError(msg) {
     const banner = document.getElementById('error-banner');
     banner.textContent = msg;
@@ -173,7 +155,7 @@ const Render = (() => {
 
   return {
     formatTime, countStats, serverVerdict, globalVerdict,
-    renderAll, renderTokenInput, showError, setLoading, setGlobalStatus,
+    renderAll, showError, setLoading, setGlobalStatus,
     nodeAvailable
   };
 })();
