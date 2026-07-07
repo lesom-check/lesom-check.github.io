@@ -10,18 +10,16 @@ const App = (() => {
   }
 
   async function loadAndRender() {
-    const btn = document.getElementById('check-all-btn');
-    if (btn) btn.textContent = 'Обновляется...';
-    Render.setGlobalStatus('');
-
     try {
       const raw = await API.fetchResults();
-      Render.renderAll(getDataFromResults(raw));
+      const data = getDataFromResults(raw);
+      Render.renderAll(data);
+      Render.renderTopology(data);
     } catch (e) {
-      Render.renderAll(CONFIG.servers.map(s => ({ server: s, entry: null, nodeData: null })));
-      Render.setGlobalStatus('Не удалось загрузить результаты');
+      const empty = CONFIG.servers.map(s => ({ server: s, entry: null, nodeData: null }));
+      Render.renderAll(empty);
+      Render.renderTopology(empty);
     }
-    if (btn) btn.textContent = 'Обновить данные';
   }
 
   function startAutoRefresh() {
@@ -39,11 +37,6 @@ const App = (() => {
   async function init() {
     await loadAndRender();
     startAutoRefresh();
-
-    document.getElementById('check-all-btn').addEventListener('click', () => {
-      loadAndRender();
-      Render.setGlobalStatus('Данные получены. Автопроверка каждые 5 мин.');
-    });
   }
 
   return { init };

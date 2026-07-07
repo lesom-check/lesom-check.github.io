@@ -113,7 +113,7 @@ const Render = (() => {
 
     if (noData) {
       verdictEl.className = 'verdict empty';
-      verdictEl.textContent = 'Нет данных проверки. Нажмите кнопку ниже.';
+      verdictEl.textContent = 'Нет данных проверки. Ожидание первого запуска...';
     } else if (anyRkn) {
       verdictEl.className = 'verdict rkn-block';
       verdictEl.textContent = 'Внимание: обнаружена вероятная блокировка РКН — сервер недоступен из России, но доступен из других стран';
@@ -125,7 +125,89 @@ const Render = (() => {
       verdictEl.textContent = 'Все серверы доступны из всех проверенных стран. Блокировка не обнаружена.';
     } else {
       verdictEl.className = 'verdict partial';
-      verdictEl.textContent = 'Частичная доступность. Рекомендуется повторить проверку.';
+      verdictEl.textContent = 'Частичная доступность.';
+    }
+  }
+
+  function renderTopology(allResults) {
+    const el = document.getElementById('topology');
+    if (!el) return;
+
+    const byId = {};
+    allResults.forEach(r => { byId[r.server.id] = r; });
+
+    function nodeSummary(serverId) {
+      const r = byId[serverId];
+      if (!r || !r.nodeData) {
+        const s = CONFIG.servers.find(s => s.id === serverId);
+        return { totalOk: 0, totalAll: 0, cls: 'checking' };
+      }
+      const stats = countStats(r.nodeData);
+      let cls = 'checking';
+      if (stats.totalAll > 0) {
+        if (stats.totalOk >= stats.totalAll * 0.9) cls = 'available';
+        else if (stats.totalOk <= stats.totalAll * 0.3) cls = 'unavailable';
+      }
+      return { totalOk: stats.totalOk, totalAll: stats.totalAll, cls };
+    }
+
+    const internetNote = CONFIG.checkNodes.length;
+
+    function nodeDot(cls) {
+      if (cls === 'available') return '<span class="tdot d-ok"></span>';
+      if (cls === 'unavailable') return '<span class="tdot d-no"></span>';
+      return '<span class="tdot d-wait"></span>';
+    }
+
+    const fi = nodeSummary('fi-server');
+    const ru = nodeSummary('ru-server');
+
+    el.innerHTML = `
+      <div class="tbox tbox-inet">
+        <div class="tbox-icon">🌐</div>
+        <div class="tbox-label">Интернет</div>
+        <div class="tbox-sub">${internetNote} стран</div>
+      </div>
+      <div class="tarrow ${fi.cls === 'available' ? 'tarrow-ok' : 'tarrow-warn'}">
+        <span class="tarr-line"></span>
+        <span class="tarr-head"></span>
+      </div>
+      <div class="tbox tbox-server ${fi.cls}">
+        <div class="tbox-icon">🇫🇮</div>
+        <div class="tbox-label">Finland VPS</div>
+        <div class="tbox-sub">91.211.114.182</div>
+        <div class="tbox-stat">${nodeDot(fi.cls)} ${fi.totalOk}/${fi.totalAll}</div>
+      </div>
+      <div class="tarrow ${ru.cls === 'available' ? 'tarrow-ok' : 'tarrow-warn'}">
+        <span class="tarr-line"></span>
+        <span class="tarr-head"></span>
+      </div>
+      <div class="tbox tbox-server ${ru.cls}">
+        <div class="tbox-icon">🇷🇺</div>
+        <div class="tbox-label">Russia VPS</div>
+        <div class="tbox-sub">185.228.235.125</div>
+        <div class="tbox-stat">${nodeDot(ru.cls)} ${ru.totalOk}/${ru.totalAll}</div>
+      </div>
+    `;
+
+    const tvEl = document.getElementById('topology-verdict');
+    if (tvEl) {
+      if (fi.cls === 'available' && ru.cls === 'available') {
+        tvEl.className = 'topology-verdict tv-ok';
+        tvEl.textContent = 'Каскад работает: оба сервера доступны';
+      } else if (fi.cls === 'available' && ru.cls === 'unavailable') {
+        tvEl.className = 'topology-verdict tv-warn';
+        tvEl.textContent = 'Finland VPS доступен, Russia VPS недоступен — вероятно, упал';
+      } else if (fi.cls === 'unavailable' && ru.cls === 'unavailable') {
+        tvEl.className = 'topology-verdict tv-down';
+        tvEl.textContent = 'Оба сервера недоступны — проверьте питание/сеть';
+      } else if (fi.cls === 'unavailable' && ru.cls === 'available') {
+        tvEl.className = 'topology-verdict tv-warn';
+        tvEl.textContent = 'Finland VPS недоступен, Russia VPS доступен';
+      } else {
+        tvEl.className = 'topology-verdict';
+        tvEl.textContent = 'Ожидание результатов проверки...';
+      }
     }
   }
 
@@ -136,26 +218,9 @@ const Render = (() => {
     setTimeout(() => banner.classList.add('hidden'), 8000);
   }
 
-  function setLoading(loading, text) {
-    const btn = document.getElementById('check-all-btn');
-    const status = document.getElementById('global-status');
-    if (loading) {
-      btn.disabled = true;
-      btn.innerHTML = text || '<span class="spinner"></span> Проверка...';
-    } else {
-      btn.disabled = false;
-      btn.textContent = 'Проверить оба сервера';
-    }
-    if (text !== undefined) status.textContent = text;
-  }
-
-  function setGlobalStatus(text) {
-    document.getElementById('global-status').textContent = text;
-  }
-
   return {
     formatTime, countStats, serverVerdict, globalVerdict,
-    renderAll, showError, setLoading, setGlobalStatus,
+    renderAll, renderTopology, showError,
     nodeAvailable
   };
 })();
