@@ -1,84 +1,16 @@
 {
   "fi-server": {
-    "timestamp": "2026-07-07T06:38:15.854Z",
+    "timestamp": "2026-07-07T06:57:40.577Z",
     "host": "91.211.114.182:443",
     "label": "Сервер в Финляндии",
-    "data": {
-      "ch1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.048284
-        }
-      ],
-      "de1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.036132
-        }
-      ],
-      "fi1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.006708
-        }
-      ],
-      "nl1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.027139
-        }
-      ],
-      "ru1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.018619
-        }
-      ],
-      "us1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.148845
-        }
-      ]
-    },
-    "error": null
+    "data": null,
+    "error": "HTTP 403/429 after 3 retries"
   },
   "ru-server": {
-    "timestamp": "2026-07-07T06:38:36.388Z",
+    "timestamp": "2026-07-07T06:58:26.142Z",
     "host": "185.228.235.125:443",
     "label": "Сервер в России",
-    "data": {
-      "ch1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "de1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "fi1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "nl1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "ru1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "us1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ]
-    },
-    "error": null
+    "data": null,
+    "error": "HTTP 403/429 after 3 retries"
   }
 }
