@@ -13,13 +13,26 @@ const NODES = [
 ];
 
 const API = 'https://check-host.net';
-const MAX_POLLS = 12;
-const POLL_DELAY = 2000;
+const MAX_POLLS = 15;
+const POLL_DELAY = 2500;
+const HEADERS = {
+  'Accept': 'application/json',
+  'User-Agent': 'Mozilla/5.0 (compatible; GeoChecker/1.0; +https://github.com/lesom-check/cheker)',
+};
 
-async function fetchJson(url) {
-  const r = await fetch(url, { headers: { Accept: 'application/json' } });
-  if (!r.ok) throw new Error(`HTTP ${r.status}`);
-  return r.json();
+async function fetchJson(url, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    const r = await fetch(url, { headers: HEADERS });
+    if (r.status === 429 || r.status === 403) {
+      const wait = attempt * 5000;
+      console.log(`  Got ${r.status}, waiting ${wait / 1000}s (attempt ${attempt}/${retries})...`);
+      await new Promise(res => setTimeout(res, wait));
+      continue;
+    }
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  }
+  throw new Error(`HTTP 403/429 after ${retries} retries`);
 }
 
 async function checkServer(server) {
@@ -45,7 +58,7 @@ async function checkServer(server) {
     console.log(`  Poll ${i + 1}: ${pending} pending`);
   }
 
-  console.log(`  Returning partial results after max polls`);
+  console.log('  Returning partial results after max polls');
   return await fetchJson(`${API}/check-result/${requestId}`);
 }
 
@@ -55,8 +68,8 @@ async function checkServer(server) {
   for (let i = 0; i < SERVERS.length; i++) {
     const server = SERVERS[i];
     if (i > 0) {
-      console.log('Waiting 8s before next server to avoid rate limit...');
-      await new Promise(r => setTimeout(r, 8000));
+      console.log('Waiting 15s before next server...');
+      await new Promise(r => setTimeout(r, 15000));
     }
     try {
       const data = await checkServer(server);
