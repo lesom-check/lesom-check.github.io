@@ -1,84 +1,16 @@
 {
   "fi-server": {
-    "timestamp": "2026-07-07T02:51:44.427Z",
+    "timestamp": "2026-07-07T02:58:53.546Z",
     "host": "91.211.114.182:443",
     "label": "Сервер в Финляндии",
-    "data": {
-      "ch1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.040885
-        }
-      ],
-      "de1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.036297
-        }
-      ],
-      "fi1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.002065
-        }
-      ],
-      "nl1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.027508
-        }
-      ],
-      "ru1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.018494
-        }
-      ],
-      "us1.node.check-host.net": [
-        {
-          "address": "91.211.114.182",
-          "time": 0.160934
-        }
-      ]
-    },
-    "error": null
+    "data": null,
+    "error": "HTTP 403"
   },
   "ru-server": {
-    "timestamp": "2026-07-07T02:51:56.912Z",
+    "timestamp": "2026-07-07T02:59:01.689Z",
     "host": "185.228.235.125:443",
     "label": "Сервер в России",
-    "data": {
-      "ch1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "de1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "fi1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "nl1.node.check-host.net": [
-        {
-          "error": "Network is unreachable"
-        }
-      ],
-      "ru1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ],
-      "us1.node.check-host.net": [
-        {
-          "error": "Connection timed out"
-        }
-      ]
-    },
-    "error": null
+    "data": null,
+    "error": "HTTP 403"
   }
 }
