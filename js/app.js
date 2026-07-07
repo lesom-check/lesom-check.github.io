@@ -1,60 +1,114 @@
 const App = (() => {
-  function loadFromStorage() {
+  let _abortController = null;
+
+  function getDataFromResults(raw) {
     return CONFIG.servers.map(server => {
-      const data = Storage.getServerResults(server.id);
-      return {
-        server,
-        nodesData: data ? data.results : null,
-        lastTime: data ? data.timestamp : null,
-      };
+      const entry = raw[server.id] || null;
+      const nodeData = (entry && entry.data) ? entry.data : null;
+      return { server, entry, nodeData };
     });
   }
 
-  function renderFromStorage() {
-    Render.renderAll(loadFromStorage());
+  async function loadAndRender() {
+    try {
+      const raw = await API.fetchResults();
+      Render.renderAll(getDataFromResults(raw));
+    } catch (e) {
+      Render.renderAll(CONFIG.servers.map(s => ({ server: s, entry: null, nodeData: null })));
+    }
   }
 
-  function checkServer(server) {
-    Render.setGlobalStatus(`Запуск проверки ${server.label.toLowerCase()}...`);
-    const nodeIds = CONFIG.checkNodes.map(n => n.id);
-    return API.initCheck(server.ip, server.port, nodeIds)
-      .then(response => {
-        if (!response.ok) throw new Error('Ошибка запуска проверки: ' + (response.error || 'неизвестно'));
-        Render.setGlobalStatus(`Ожидание результатов для ${server.label.toLowerCase()}... (request_id: ${response.request_id})`);
-        return API.pollResults(response.request_id, CONFIG.pollAttempts, CONFIG.pollDelay);
-      })
-      .then(data => {
-        Storage.setServerResults(server.id, data);
-        return data;
-      });
+  function getCurrentTimestamps(raw) {
+    const ts = {};
+    CONFIG.servers.forEach(s => {
+      const e = raw[s.id];
+      ts[s.id] = e ? e.timestamp || '' : '';
+    });
+    return ts;
   }
 
-  async function checkAll() {
-    Render.setLoading(true);
-    Render.setGlobalStatus('Запуск проверок...');
-    const results = [];
-
-    for (const server of CONFIG.servers) {
-      try {
-        const data = await checkServer(server);
-        results.push({ server, data, ok: true });
-      } catch (err) {
-        Render.showError(`Ошибка проверки ${server.label}: ${err.message}`);
-        results.push({ server, data: null, ok: false });
-      }
+  async function doCheck() {
+    const token = Storage.getToken();
+    if (!token) {
+      Render.showError('Сначала сохраните GitHub токен');
+      return;
     }
 
-    Render.renderAll(loadFromStorage());
-    Render.setLoading(false);
-    Render.setGlobalStatus('');
+    if (_abortController) _abortController.abort();
+    _abortController = new AbortController();
+    const signal = _abortController.signal;
+
+    try {
+      let currentRaw;
+      try {
+        currentRaw = await API.fetchResults();
+      } catch (e) {
+        currentRaw = {};
+      }
+
+      Render.setLoading(true, '<span class="spinner"></span> Запуск проверки...');
+      Render.setGlobalStatus('Отправка запроса в GitHub Actions...');
+
+      await API.triggerWorkflow(token);
+      Render.setGlobalStatus('Проверка запущена, ожидание результатов...');
+
+      const prevTimestamps = getCurrentTimestamps(currentRaw);
+      const newRaw = await API.waitForNewResults(prevTimestamps, signal);
+
+      Render.renderAll(getDataFromResults(newRaw));
+      Render.setGlobalStatus('');
+    } catch (err) {
+      if (err.message === 'Aborted') {
+        Render.setGlobalStatus('');
+      } else {
+        Render.showError(err.message);
+        Render.setGlobalStatus('');
+        await loadAndRender();
+      }
+    } finally {
+      Render.setLoading(false);
+      _abortController = null;
+    }
   }
 
-  function init() {
-    renderFromStorage();
-    document.getElementById('check-all-btn').addEventListener('click', checkAll);
+  function setupTokenHandlers() {
+    const section = document.getElementById('token-section');
+    if (!section) return;
+
+    section.addEventListener('click', e => {
+      if (e.target.id === 'btn-token-save') {
+        const input = document.getElementById('token-input');
+        if (input && input.value.trim()) {
+          Storage.setToken(input.value.trim());
+          Render.renderTokenInput(true);
+        }
+      }
+      if (e.target.id === 'btn-token-reset') {
+        Storage.clearToken();
+        Render.renderTokenInput(false);
+      }
+    });
+
+    section.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.id === 'token-input') {
+        const input = document.getElementById('token-input');
+        if (input && input.value.trim()) {
+          Storage.setToken(input.value.trim());
+          Render.renderTokenInput(true);
+        }
+      }
+    });
   }
 
-  return { init, checkAll };
+  async function init() {
+    setupTokenHandlers();
+    Render.renderTokenInput(!!Storage.getToken());
+    await loadAndRender();
+
+    document.getElementById('check-all-btn').addEventListener('click', doCheck);
+  }
+
+  return { init, doCheck };
 })();
 
 document.addEventListener('DOMContentLoaded', App.init);

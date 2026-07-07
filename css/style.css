@@ -303,6 +303,85 @@ footer a:hover {
   border: 1px solid #991b1b;
 }
 
+.token-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.token-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.token-input {
+  flex: 1;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+
+.token-input:focus {
+  border-color: var(--blue);
+}
+
+.token-input::placeholder {
+  color: var(--text-muted);
+}
+
+.btn-token-save,
+.btn-token-reset {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-token-save {
+  background: var(--blue);
+  color: #fff;
+}
+
+.btn-token-reset {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+
+.btn-token-save:hover,
+.btn-token-reset:hover {
+  opacity: 0.85;
+}
+
+.token-saved {
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.token-hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.token-hint code {
+  background: var(--bg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
 .hidden {
   display: none;
 }

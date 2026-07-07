@@ -1,4 +1,5 @@
 const CONFIG = {
+  repo: 'lesom-check/cheker',
   servers: [
     {
       id: 'fi-server',
@@ -21,9 +22,6 @@ const CONFIG = {
     { id: 'us1.node.check-host.net', label: 'США', code: 'US' },
     { id: 'ch1.node.check-host.net', label: 'Швейцария', code: 'CH' },
   ],
-  corsProxies: [
-    'https://corsproxy.io/?',
-  ],
-  pollAttempts: 8,
-  pollDelay: 1500,
+  pollResultsInterval: 4000,
+  maxResultPolls: 20,
 };

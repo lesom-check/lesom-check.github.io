@@ -1,45 +1,25 @@
 const Storage = (() => {
-  const KEY = 'geoav_check_results';
-  const TIME_KEY = 'geoav_last_check';
+  const TOKEN_KEY = 'geoav_gh_token';
 
-  function load() {
+  function getToken() {
     try {
-      const raw = localStorage.getItem(KEY);
-      return raw ? JSON.parse(raw) : {};
+      return localStorage.getItem(TOKEN_KEY) || '';
     } catch (e) {
-      return {};
+      return '';
     }
   }
 
-  function save(data) {
+  function setToken(token) {
     try {
-      localStorage.setItem(KEY, JSON.stringify(data));
-      localStorage.setItem(TIME_KEY, new Date().toISOString());
+      localStorage.setItem(TOKEN_KEY, token);
     } catch (e) {}
   }
 
-  function getLastCheckTime() {
+  function clearToken() {
     try {
-      const ts = localStorage.getItem(TIME_KEY);
-      return ts ? new Date(ts) : null;
-    } catch (e) {
-      return null;
-    }
+      localStorage.removeItem(TOKEN_KEY);
+    } catch (e) {}
   }
 
-  function getServerResults(serverId) {
-    const all = load();
-    return all[serverId] || null;
-  }
-
-  function setServerResults(serverId, results) {
-    const all = load();
-    all[serverId] = {
-      timestamp: new Date().toISOString(),
-      results: results,
-    };
-    save(all);
-  }
-
-  return { load, save, getLastCheckTime, getServerResults, setServerResults };
+  return { getToken, setToken, clearToken };
 })();

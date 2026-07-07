@@ -1,53 +1,66 @@
 const API = (() => {
-  const CHECK_HOST = 'https://check-host.net';
+  function triggerWorkflow(token) {
+    return fetch(
+      `https://api.github.com/repos/${CONFIG.repo}/actions/workflows/check.yml/dispatches`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github+json',
+        },
+        body: JSON.stringify({ ref: 'main' }),
+      }
+    ).then(r => {
+      if (!r.ok) throw new Error(`GitHub API: ${r.status}`);
+    });
+  }
 
-  function proxyFetch(targetUrl, proxyIndex) {
-    if (proxyIndex === undefined) proxyIndex = 0;
-    if (proxyIndex >= CONFIG.corsProxies.length) {
-      return Promise.reject(new Error('Все CORS-прокси недоступны'));
-    }
-    const proxy = CONFIG.corsProxies[proxyIndex];
-    const url = proxy + encodeURIComponent(targetUrl);
-    return fetch(url)
+  function fetchResults() {
+    return fetch('results/results.json?t=' + Date.now())
       .then(r => {
-        if (!r.ok) throw new Error('Proxy HTTP ' + r.status);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
         return r.json();
-      })
-      .catch(() => proxyFetch(targetUrl, proxyIndex + 1));
+      });
   }
 
-  function initCheck(host, port, nodeIds) {
-    const nodeParams = nodeIds.map(id => 'node=' + encodeURIComponent(id)).join('&');
-    const url = `${CHECK_HOST}/check-tcp?host=${encodeURIComponent(host)}:${port}&${nodeParams}`;
-    return proxyFetch(url);
-  }
-
-  function getResults(requestId) {
-    const url = `${CHECK_HOST}/check-result/${encodeURIComponent(requestId)}`;
-    return proxyFetch(url);
-  }
-
-  function pollResults(requestId, attempts, delay) {
-    let tries = 0;
+  function waitForNewResults(prevTimestamps, signal) {
     return new Promise((resolve, reject) => {
+      let attempts = 0;
+
       function poll() {
-        tries++;
-        getResults(requestId)
+        if (signal && signal.aborted) {
+          reject(new Error('Aborted'));
+          return;
+        }
+        if (attempts >= CONFIG.maxResultPolls) {
+          reject(new Error('Таймаут ожидания результатов'));
+          return;
+        }
+        attempts++;
+        fetchResults()
           .then(data => {
-            const allDone = CONFIG.checkNodes.every(n => data[n.id] !== null && data[n.id] !== undefined);
-            if (allDone) {
-              resolve(data);
-            } else if (tries >= attempts) {
+            let updated = false;
+            CONFIG.servers.forEach(s => {
+              const entry = data[s.id];
+              if (entry && entry.timestamp) {
+                const prev = prevTimestamps[s.id];
+                if (!prev || entry.timestamp > prev) {
+                  updated = true;
+                }
+              }
+            });
+            if (updated) {
               resolve(data);
             } else {
-              setTimeout(poll, delay);
+              setTimeout(poll, CONFIG.pollResultsInterval);
             }
           })
-          .catch(reject);
+          .catch(() => setTimeout(poll, CONFIG.pollResultsInterval));
       }
+
       poll();
     });
   }
 
-  return { initCheck, getResults, pollResults };
+  return { triggerWorkflow, fetchResults, waitForNewResults };
 })();
