@@ -1,50 +1,50 @@
 {
   "fi-server": {
-    "timestamp": "2026-07-07T04:31:10.289Z",
+    "timestamp": "2026-07-07T04:39:31.187Z",
     "host": "91.211.114.182:443",
     "label": "Сервер в Финляндии",
     "data": {
       "ch1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.059752
+          "time": 0.042787
         }
       ],
       "de1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.036403
+          "time": 0.036544
         }
       ],
       "fi1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.002281
+          "time": 0.002627
         }
       ],
       "nl1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.027323
+          "time": 0.027766
         }
       ],
       "ru1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.016839
+          "time": 0.018404
         }
       ],
       "us1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.148478
+          "time": 0.164908
         }
       ]
     },
     "error": null
   },
   "ru-server": {
-    "timestamp": "2026-07-07T04:31:30.666Z",
+    "timestamp": "2026-07-07T04:39:51.628Z",
     "host": "185.228.235.125:443",
     "label": "Сервер в России",
     "data": {
