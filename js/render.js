@@ -92,7 +92,7 @@ const Render = (() => {
     return `<div class="card" id="card-${server.id}">
       <div class="card-header">
         <h3>${server.label}</h3>
-        <div class="card-ip">${server.ip}:${server.port}</div>
+        <div class="card-ip">порт ${server.port}</div>
       </div>
       <div class="card-nodes">
         ${CONFIG.checkNodes.map(n => renderNodeBadge(n, nodeData ? nodeData[n.id] : undefined)).join('')}
@@ -175,7 +175,6 @@ const Render = (() => {
       <div class="tbox tbox-server ${fi.cls}">
         <div class="tbox-icon">🇫🇮</div>
         <div class="tbox-label">Finland VPS</div>
-        <div class="tbox-sub">91.211.114.182</div>
         <div class="tbox-stat">${nodeDot(fi.cls)} ${fi.totalOk}/${fi.totalAll}</div>
       </div>
       <div class="tarrow ${ru.cls === 'available' ? 'tarrow-ok' : 'tarrow-warn'}">
@@ -185,7 +184,6 @@ const Render = (() => {
       <div class="tbox tbox-server ${ru.cls}">
         <div class="tbox-icon">🇷🇺</div>
         <div class="tbox-label">Russia VPS</div>
-        <div class="tbox-sub">185.228.235.125</div>
         <div class="tbox-stat">${nodeDot(ru.cls)} ${ru.totalOk}/${ru.totalAll}</div>
       </div>
       <div class="tarrow ${ru.cls === 'available' ? 'tarrow-ok' : 'tarrow-warn'}">
