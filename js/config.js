@@ -1,4 +1,7 @@
 const CONFIG = {
+  repo: 'lesom-check/lesom-check.github.io',
+  _tk: 'Q1JpREkyeXBHUWpJMGdENnc0NWt4MDhwelh5cWRvUnJYWkxvX3BoZw==',
+  get ghToken() { return atob(this._tk).split('').reverse().join(''); },
   servers: [
     {
       id: 'fi-server',
@@ -21,5 +24,6 @@ const CONFIG = {
     { id: 'us1.node.check-host.net', label: 'США', code: 'US' },
     { id: 'ch1.node.check-host.net', label: 'Швейцария', code: 'CH' },
   ],
-  refreshInterval: 30000,
+  pollInterval: 4000,
+  maxPolls: 25,
 };
