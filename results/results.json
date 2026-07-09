@@ -1,87 +1,87 @@
 {
   "fi-server": {
-    "timestamp": "2026-07-07T08:52:23.925Z",
+    "timestamp": "2026-07-09T13:48:34.894Z",
     "host": "91.211.114.182:443",
     "label": "Сервер в Финляндии",
     "data": {
       "ch1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.041804
+          "time": 0.052642
         }
       ],
       "de1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.036615
+          "time": 0.036922
         }
       ],
       "fi1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.00338
+          "time": 0.001622
         }
       ],
       "nl1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.026288
+          "time": 0.027029
         }
       ],
       "ru1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.017621
+          "time": 0.018573
         }
       ],
       "us1.node.check-host.net": [
         {
           "address": "91.211.114.182",
-          "time": 0.149024
+          "time": 0.165366
         }
       ]
     },
     "error": null
   },
   "ru-server": {
-    "timestamp": "2026-07-07T08:52:41.684Z",
+    "timestamp": "2026-07-09T13:48:52.828Z",
     "host": "185.228.235.125:443",
     "label": "Сервер в России",
     "data": {
       "ch1.node.check-host.net": [
         {
           "address": "185.228.235.125",
-          "time": 0.06112
+          "time": 0.070402
         }
       ],
       "de1.node.check-host.net": [
         {
           "address": "185.228.235.125",
-          "time": 0.04863
+          "time": 0.050962
         }
       ],
       "fi1.node.check-host.net": [
         {
           "address": "185.228.235.125",
-          "time": 0.022786
+          "time": 0.023784
         }
       ],
       "nl1.node.check-host.net": [
         {
           "address": "185.228.235.125",
-          "time": 0.050726
+          "time": 0.051211
         }
       ],
       "ru1.node.check-host.net": [
         {
           "address": "185.228.235.125",
-          "time": 0.113237
+          "time": 0.02395
         }
       ],
       "us1.node.check-host.net": [
         {
           "address": "185.228.235.125",
-          "time": 1.182958
+          "time": 0.165142
         }
       ]
     },
